@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Portfolio - Khisbul Maulana Ishaq</title>
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .font-code {
+            font-family: 'Fira Code', monospace;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #334155 0%, #0f172a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-16px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .glow {
+            box-shadow: 0 0 20px rgba(51, 65, 85, 0.2);
+        }
+
+        @keyframes skillBar {
+            0% { width: 0; }
+            100% { width: var(--skill-width); }
+        }
+        .skill-bar {
+            display: block;
+            height: 100%;
+            border-radius: 9999px;
+            background: #334155;
+            animation: skillBar 1.8s ease-out forwards;
+        }
+        .skill-track {
+            background: #e2e8f0;
+            border-radius: 9999px;
+            height: 6px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        /* NAVIGATION */
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #64748b;
+            text-decoration: none;
+            padding: 0.4rem 0;
+            transition: color 0.3s ease;
+            letter-spacing: 0.01em;
+        }
+
+        .nav-links a:hover {
+            color: #0f172a;
+        }
+
+        .nav-links a.active {
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 0.2rem;
+            padding: 0.75rem 0 0.25rem;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 0.5rem;
+        }
+
+        .mobile-menu.open {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            font-weight: 500;
+            font-size: 1rem;
+            color: #64748b;
+            text-decoration: none;
+            padding: 0.6rem 0;
+            transition: color 0.2s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: #0f172a;
+        }
+
+        .mobile-menu a.active {
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #475569;
+            cursor: pointer;
+            padding: 0.25rem;
+            transition: color 0.2s ease;
+        }
+
+        .menu-toggle:hover {
+            color: #0f172a;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.12;
+            background: #334155;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        @keyframes particle-float {
+            0% { transform: translateY(0) translateX(0); opacity: 0.12; }
+            50% { opacity: 0.20; }
+            100% { transform: translateY(110vh) translateX(80px); opacity: 0; }
+        }
+
+        .btn-primary {
+            background: #1e293b;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: #0f172a;
+            transform: scale(1.03);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn-outline {
+            border: 1.5px solid #cbd5e1;
+            color: #1e293b;
+            background: transparent;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        .bg-soft {
+            background: #f1f5f9;
+        }
+        .border-soft {
+            border-color: #e2e8f0;
+        }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #1e293b;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        #back-to-top:hover {
+            background: #0f172a;
+            transform: scale(1.08);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+            }
+
+            section {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
+
+            .hero h1 {
+                font-size: 2.4rem !important;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem !important;
+            }
+
+            .btn-primary,
+            .btn-outline {
+                padding: 0.6rem 1.4rem !important;
+                font-size: 0.85rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem !important;
+            }
+            .hero .subtitle {
+                font-size: 1rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PARTICLES -->
+    <div id="particles" class="fixed inset-0 pointer-events-none" style="z-index:0;"></div>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-soft">
+        <div class="container mx-auto px-4 md:px-6 py-3 md:py-4">
+            <div class="nav-container">
+                <a href="#home" class="text-2xl font-bold gradient-text tracking-tight">Portfolio</a>
+
+                <ul class="nav-links">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+
+                <button id="mobile-menu-btn" class="menu-toggle" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <div id="mobile-menu" class="mobile-menu">
+                <a href="#home" class="active">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative pt-16 md:pt-20 hero">
+        <div class="container mx-auto px-4 md:px-6 py-8 md:py-12 text-center">
+            <div class="max-w-3xl mx-auto">
+                <p class="text-gray-500 mb-3 font-code text-sm tracking-widest">Hello World! I'm</p>
+                <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 leading-tight tracking-tight">
+                    <span class="gradient-text">Khisbul Maulana I.</span>
+                </h1>
+                <div class="text-xl sm:text-2xl md:text-3xl text-gray-700 mb-5 font-medium subtitle">
+                    Pentester | Ethical Hacker
+                </div>
+                <p class="text-base sm:text-lg text-gray-500 mb-10 max-w-xl mx-auto leading-relaxed">
+                    I was just looking for bugs in the app for fun
+                </p>
+                <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
+                    <a href="#contact" class="btn-primary px-6 sm:px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 glow">
+                        <i class="fas fa-envelope mr-2"></i> Get In Touch
+                    </a>
+                    <a href="#about" class="btn-outline px-6 sm:px-8 py-3 rounded-full transition-all duration-300">
+                        <i class="fas fa-user mr-2"></i> About Me
+                    </a>
+                </div>
+
+                <div class="mt-10 sm:mt-12 flex justify-center space-x-6">
+                    <a href="https://github.com/bhutok" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-700 transition-colors duration-300 text-2xl">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://tiktok.com/@khisnahaq" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-700 transition-colors duration-300 text-2xl">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="https://instagram.com/khisnahaq" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-700 transition-colors duration-300 text-2xl">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce text-gray-400">
+            <i class="fas fa-chevron-down text-xl"></i>
+        </div>
+    </section>
+
+    <!-- ABOUT - Gambar di atas teks pada mobile -->
+    <section id="about" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12 md:mb-16">
+                <span class="gradient-text">About Me</span>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center max-w-5xl mx-auto">
+                <!-- Gambar - di atas pada mobile, di kanan pada desktop -->
+                <div class="order-1 md:order-2 flex justify-center">
+                    <div class="relative">
+                        <div class="w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 p-1 float-animation">
+                            <div class="w-full h-full rounded-full bg-white p-1.5">
+                                <img src="https://randixploit.github.io/img/anime.jpeg" alt="Profile" class="w-full h-full rounded-full object-cover" loading="lazy" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Teks - di bawah pada mobile, di kiri pada desktop -->
+                <div class="order-2 md:order-1">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Who am I?</h3>
+                    <p class="text-gray-600 mb-5 leading-relaxed">
+                        I enjoy finding bugs in applications; sometimes I report them, and sometimes I don't. I am neither a good person nor a bad one. I'm a mix of both.
+                    </p>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        My motivation towards cybersecurity is unclear, sometimes it's just for fun, sometimes I get serious. Well… it's mostly just for fun, haha.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <p class="text-gray-700 font-semibold text-sm mb-0.5"><i class="fas fa-map-marker-alt mr-2 text-gray-500"></i>Location</p>
+                            <p class="text-gray-500 text-sm">East Java, Indonesia</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-700 font-semibold text-sm mb-0.5"><i class="fas fa-graduation-cap mr-2 text-gray-500"></i>Education</p>
+                            <p class="text-gray-500 text-sm">SMK Senopati</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-700 font-semibold text-sm mb-0.5"><i class="fas fa-briefcase mr-2 text-gray-500"></i>Experience</p>
+                            <p class="text-gray-500 text-sm">1337 Years</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-700 font-semibold text-sm mb-0.5"><i class="fas fa-heart mr-2 text-gray-500"></i>Interests</p>
+                            <p class="text-gray-500 text-sm">Pentester, Kartun</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-16 md:py-24 bg-soft">
+        <div class="container mx-auto px-4 md:px-6">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12 md:mb-16">
+                <span class="gradient-text">Skills &amp; Technologies</span>
+            </h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="mb-12">
+                    <h3 class="text-xl font-semibold mb-8 text-center text-gray-700">Technical Skills</h3>
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                    <span>Linux</span>
+                                    <span>25%</span>
+                                </div>
+                                <div class="skill-track">
+                                    <span class="skill-bar" style="--skill-width:25%;"></span>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                    <span>Python</span>
+                                    <span>40%</span>
+                                </div>
+                                <div class="skill-track">
+                                    <span class="skill-bar" style="--skill-width:40%;"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                    <span>Search Engine</span>
+                                    <span>30%</span>
+                                </div>
+                                <div class="skill-track">
+                                    <span class="skill-bar" style="--skill-width:30%;"></span>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                    <span>Nolep</span>
+                                    <span>90%</span>
+                                </div>
+                                <div class="skill-track">
+                                    <span class="skill-bar" style="--skill-width:90%;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold mb-8 text-center text-gray-700">Technologies I Use</h3>
+                    <div class="grid grid-cols-3 gap-4 max-w-sm mx-auto">
+                        <div class="text-center bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:bg-gray-50 transition-all duration-300 hover:-translate-y-1">
+                            <i class="fas fa-terminal text-3xl text-gray-600"></i>
+                            <p class="text-xs text-gray-500 mt-2 font-medium">Terminal</p>
+                        </div>
+                        <div class="text-center bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:bg-gray-50 transition-all duration-300 hover:-translate-y-1">
+                            <i class="fas fa-database text-3xl text-gray-600"></i>
+                            <p class="text-xs text-gray-500 mt-2 font-medium">SqlMap</p>
+                        </div>
+                        <div class="text-center bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:bg-gray-50 transition-all duration-300 hover:-translate-y-1">
+                            <i class="fas fa-brain text-3xl text-gray-600"></i>
+                            <p class="text-xs text-gray-500 mt-2 font-medium">IQ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-12 md:mb-16">
+                <span class="gradient-text">Get In Touch</span>
+            </h2>
+            <div class="max-w-4xl mx-auto">
+                <p class="text-center text-gray-600 mb-10 md:mb-12 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                    I'm always open to discussing new opportunities, creative ideas, or potential collaborations. Feel free to reach out!
+                </p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-50 p-6 md:p-8 rounded-xl border border-gray-200">
+                        <form id="contact-form">
+                            <div class="mb-5">
+                                <label class="block text-gray-700 text-sm font-medium mb-1.5" for="name">
+                                    <i class="fas fa-user mr-2 text-gray-400"></i>Your Name
+                                </label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent transition" required>
+                            </div>
+                            <div class="mb-5">
+                                <label class="block text-gray-700 text-sm font-medium mb-1.5" for="email">
+                                    <i class="fas fa-envelope mr-2 text-gray-400"></i>Your Email
+                                </label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent transition" required>
+                            </div>
+                            <div class="mb-5">
+                                <label class="block text-gray-700 text-sm font-medium mb-1.5" for="message">
+                                    <i class="fas fa-comment mr-2 text-gray-400"></i>Message
+                                </label>
+                                <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent transition" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full btn-primary py-3 rounded-xl text-center font-medium">
+                                <i class="fas fa-paper-plane mr-2"></i>Send Message
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-gray-50 p-5 md:p-6 rounded-xl border border-gray-200 flex items-center space-x-4 hover:bg-gray-100 transition-colors duration-300">
+                            <div class="w-11 h-11 md:w-12 md:h-12 bg-gray-300 rounded-full flex items-center justify-center text-gray-700 flex-shrink-0">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-gray-800 font-semibold text-sm md:text-base">Email</h4>
+                                <p class="text-gray-600 text-sm">khisbulbughunter@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-5 md:p-6 rounded-xl border border-gray-200 flex items-center space-x-4 hover:bg-gray-100 transition-colors duration-300">
+                            <div class="w-11 h-11 md:w-12 md:h-12 bg-gray-300 rounded-full flex items-center justify-center text-gray-700 flex-shrink-0">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-gray-800 font-semibold text-sm md:text-base">Phone</h4>
+                                <p class="text-gray-600 text-sm">+62 851 0000 0000</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-5 md:p-6 rounded-xl border border-gray-200 flex items-center space-x-4 hover:bg-gray-100 transition-colors duration-300">
+                            <div class="w-11 h-11 md:w-12 md:h-12 bg-gray-300 rounded-full flex items-center justify-center text-gray-700 flex-shrink-0">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-gray-800 font-semibold text-sm md:text-base">Location</h4>
+                                <p class="text-gray-600 text-sm">East Java, Indonesia</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-5 md:p-6 rounded-xl border border-gray-200">
+                            <h4 class="text-gray-800 font-semibold text-sm md:text-base mb-3">Connect With Me</h4>
+                            <div class="flex space-x-3">
+                                <a href="https://github.com/bhutok" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors shadow-sm">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://tiktok.com/@khisnahaq" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors shadow-sm">
+                                    <i class="fab fa-tiktok"></i>
+                                </a>
+                                <a href="https://instagram.com/khisnahaq" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200 transition-colors shadow-sm">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-6 md:py-8 bg-white border-t border-gray-200">
+        <div class="container mx-auto px-4 text-center text-sm text-gray-500">
+            &copy; 2025 Khisbul Maulana Ishaq. All rights reserved. Made with
+            <i class="fas fa-heart text-gray-400"></i> and
+            <i class="fas fa-coffee text-gray-400"></i>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <button id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ===== MOBILE MENU =====
+            var menuBtn = document.getElementById('mobile-menu-btn');
+            var mobileMenu = document.getElementById('mobile-menu');
+
+            menuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('open');
+            });
+
+            // ===== SMOOTH SCROLL + CLOSE MOBILE =====
+            document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+                anchor.addEventListener('click', function(e) {
+                    var targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    var target = document.querySelector(targetId);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        mobileMenu.classList.remove('open');
+                    }
+                });
+            });
+
+            // ===== ACTIVE NAV LINK =====
+            var sections = document.querySelectorAll('section');
+            var navLinks = document.querySelectorAll('.nav-links a, .mobile-menu a');
+
+            function updateActiveLink() {
+                var current = '';
+                sections.forEach(function(section) {
+                    var top = section.offsetTop - 180;
+                    if (window.scrollY >= top) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach(function(link) {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveLink);
+            window.addEventListener('load', updateActiveLink);
+
+            // ===== BACK TO TOP =====
+            var backBtn = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backBtn.classList.add('visible');
+                } else {
+                    backBtn.classList.remove('visible');
+                }
+            });
+
+            backBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // ===== CONTACT FORM =====
+            document.getElementById('contact-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! I will get back to you soon.');
+                this.reset();
+            });
+
+            // ===== PARTICLES =====
+            var particlesContainer = document.getElementById('particles');
+
+            function createParticle() {
+                var el = document.createElement('div');
+                el.className = 'particle';
+                var size = Math.random() * 5 + 2;
+                el.style.width = size + 'px';
+                el.style.height = size + 'px';
+                el.style.left = Math.random() * 100 + '%';
+                el.style.top = '-10px';
+                el.style.animationDuration = (Math.random() * 18 + 12) + 's';
+                el.style.animation = 'particle-float ' + (Math.random() * 18 + 12) + 's infinite linear';
+                particlesContainer.appendChild(el);
+
+                setTimeout(function() {
+                    if (el.parentNode) el.remove();
+                }, 30000);
+            }
+
+            for (var i = 0; i < 10; i++) {
+                setTimeout(createParticle, i * 200);
+            }
+            setInterval(createParticle, 1500);
+
+            // ===== FADE-IN SECTIONS =====
+            var fadeSections = document.querySelectorAll('section');
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+            fadeSections.forEach(function(section) {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(28px)';
+                section.style.transition = 'opacity 0.7s ease-out, transform 0.7s ease-out';
+                observer.observe(section);
+            });
+
+        })();
+    </script>
+
+</body>
+</html>
